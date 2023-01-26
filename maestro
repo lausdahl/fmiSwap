@@ -1,0 +1,8 @@
+#!/bin/sh
+
+
+#java -classpath $MAESTRO_EXT_CP/tools/maestro.jar:/work/model/classpath -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005 org.intocps.maestro.Main $@
+
+#java -classpath /tools/classpath:/work/model/classpath/ org.intocps.maestro.Main $@
+
+java -classpath $MAESTRO_EXT_CP/tools/maestro.jar:/work/model/classpath org.intocps.maestro.Main $@
