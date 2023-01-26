@@ -40,10 +40,11 @@ jobs:
           tags: lausdahl/maestro:2.3.0-model-swap
       -
         name: Image test
-        run: docker run -it -v ${PWD}:/work/model/post  lausdahl/maestro:2.3.0-model-swap
+        run: docker run -v ${PWD}:/work/model/post  lausdahl/maestro:2.3.0-model-swap
 
       - name: Archive plot
         uses: actions/upload-artifact@v3
         with:
           name: plot
-          path: result.pdf
+          path: result.*
+          retention-days: 5

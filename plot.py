@@ -29,4 +29,5 @@ plt.rcParams['figure.figsize'] = [12, 10]
     #plt.rcParams['figure.dpi'] = 200 #e.g. is really fine, but slower\n",
 #plt.show()
 Path('post').mkdir(parents=True, exist_ok=True)
+plt.savefig('post/result.png')
 plt.savefig('post/result.pdf')
