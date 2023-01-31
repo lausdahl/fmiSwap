@@ -1,19 +1,25 @@
 # fmiSWAP
 
-This repository contains a watertank with model swap and a `Dockerfile` to build a running example using Maestro with the model swap feature including a FaultInject extension.
+This repository contains a watertank with model swap and a `Dockerfile` to build a running example using the Maestro co-orchestration engine for FMI-based co-simulation with the model swap feature including a FaultInject extension.
 
-For futher information about the image content see the `README_dockerhub.md`
+# Getting started - Quick setup
 
-# Build the image
+In order to quickly run the experiment and produce the results of the artefact paper ("Dynamic Runtime Integration of New Models in Digital Twins" [H. Ejersbo, K. Lausdahl, M. Frasheri, L. Esterle]) do the following:
 
-```
+## Build the image
+
+```bash
 docker build . --tag lausdahl/maestro:2.3.0-model-swap
 ```
 
-to push the image use `docker login` and then `docker push lausdahl/maestro:2.3.0-model-swap`
+## Run the example
 
-# Run the example
-
-```
+```bash
 docker run -it -v ${PWD}:/work/model/post  lausdahl/maestro:2.3.0-model-swap
 ```
+
+After this step completes, you should see in the containing folder two files ```result.png``` and ```result.pdf```, showing the plot included in the paper. 
+
+# Details of usage
+
+For futher information about the image content see the `README_dockerhub.md`.
