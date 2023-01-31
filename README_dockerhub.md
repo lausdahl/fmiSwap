@@ -7,7 +7,7 @@ The Maestro tag `2.3.0-model-swap` (see further down for details on Mastro itsel
 Run the embedded example and inspect the result as follows:
 
 ```bash
-docker run -v ${PWD}:/work/model/post lausdahl/maestro:2.3.0-model-swap
+$ docker run -v ${PWD}:/work/model/post lausdahl/maestro:2.3.0-model-swap
 ```
 
 This will run maestro with the embeded example model by performing the following steps:
@@ -50,13 +50,13 @@ and change min/max (for old controller and new leak controller) to some other va
 In order to run the updated experiment, rebuild the image:
 
 ```bash
-docker build . --tag lausdahl/maestro:2.3.0-model-swap
+$ docker build . --tag lausdahl/maestro:2.3.0-model-swap
 ```
 
 and then run:
 
 ```bash
-docker run -v ${PWD}:/work/model/post lausdahl/maestro:2.3.0-model-swap
+$ docker run -v ${PWD}:/work/model/post lausdahl/maestro:2.3.0-model-swap
 ```
 
 Additionally, one could also change the level of the leak as follows, find the ```wt_fault.xml``` file which contains:
@@ -98,7 +98,7 @@ The tag `*-model-swap` includes a test model showing how model swapping can be u
 To run the container use:
 
 ```bash
-docker run lausdahl/maestro:latest
+$ docker run lausdahl/maestro:latest
 ```
 
 This will run the following scripts:
