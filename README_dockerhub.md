@@ -10,10 +10,38 @@ Run the embedded example and inspect the result as follows:
 $ docker run -v ${PWD}:/work/model/post lausdahl/maestro:2.3.0-model-swap
 ```
 
-This will run maestro with the embeded example model by performing the following steps:
+This will run the following scripts:
+* `/work/model/run.sh`
+* `/work/model/post-process.sh`
+
+that perform the following steps:
 * Import the multi-model configurations into the Mabl language
 * Execute the mabl specification
 * The embedded model will use a model specific python script to plot the results to the `/work/model/post/result.pdf` folder
+
+If you want to get the raw logs generated in the container then add the following lines at the end of script ```run.sh``` before the ```echo Done```line:
+
+```bash
+cp -r stage1 post
+cp -r transition/stage2 post
+```
+
+Thereafter, rebuild the docker image:
+
+```bash
+$ docker build . --tag lausdahl/maestro:2.3.0-model-swap
+```
+
+and rerun the experiment:
+
+```bash
+$ docker run -v ${PWD}/output:/work/model/post lausdahl/maestro:2.3.0-model-swap
+```
+
+The files can be found in the generated ```output``` folder.
+The logs before the swap are found in ```stage1```, and after the swap in ```stage2```.
+The cvs files contain the data that is plotted, whereas the ```.log``` files are the raw logs for each FMU.
+The generated Mabl specs can also be found here. 
 
 ## Details
 
@@ -21,7 +49,7 @@ The input multi-model files for this experiment are the ```mm1.json``` and ```mm
 
 Running the `/work/model/run.sh` script (the `import` commands) outputs the corresponding MaBL specs obtained from parsing the multi-model files by Maestro. The generated files are placed in folders stage1 and transition/stage2 for mm1.json and mm2.json, respectively.
 
-Running the `/work/model/run.sh` script (the `interpret` command) runs the co-simulation starting in stage1/spec.mabl and swapping to transition/stage2/spec.mabl. The script runs Maesto with the cmd line option '-tms 50', which specifies that Maestro should pick up the swap specification in transition/stage2/spec.mabl after 50 simulation steps. This serves a means to control in details when you want the swap specification to become available and avoids the need to have additional scripts that copies the swap spec in place based on e.g. time.
+Running the `/work/model/run.sh` script (the `interpret` command) runs the co-simulation starting in stage1/spec.mabl and swapping to transition/stage2/spec.mabl. The script runs Maestro with the cmd line option '-tms 50', which specifies that Maestro should pick up the swap specification in transition/stage2/spec.mabl after 50 simulation steps. This serves a means to control in details when you want the swap specification to become available and avoids the need to have additional scripts that copies the swap spec in place based on e.g. time.
 
 ## Playing with the example
 
@@ -73,7 +101,7 @@ Additionally, one could also change the level of the leak as follows, find the `
 ```
 
 You can change ```when``` the fault is injected, as well specify other conditions as in ```other```. In this case we inject the fault in the water tank when ```var_17``` (referring to the level in the tank)
-is greater than 1.6, and when ```var_16```(referring to the valve in the tank) is closed. The fault is injected to the valve, where the value of the valve is flipped ```newVal="1.0-var_16"```.
+is greater than 1.6, and when ```var_16```(referring to the valve in the tank) is closed, only after time 12.0. The fault is injected to the valve, where the value of the valve is flipped ```newVal="1.0-var_16"```.
 One could for example change the leak level, instead of 1.6 to another value.
 
 Always remember to rebuild the docker image after the changes before running the experiment.
@@ -90,8 +118,8 @@ The tag `*-model-swap` includes a test model showing how model swapping can be u
 
 # Supported Maestro tags
 
-* latest
 * 2.3.0-model-swap
+* latest (currently the same as 2.3.0-model-swap)
 
 # Usage
 
